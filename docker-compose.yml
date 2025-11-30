@@ -1,0 +1,24 @@
+services:
+  # Icecast - стриминг сервер
+  icecast:
+    image: moul/icecast
+    container_name: radio_icecast
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config/icecast.xml:/etc/icecast2/icecast.xml:ro
+    restart: unless-stopped
+
+  # Liquidsoap - проигрывает музыку и отправляет в Icecast
+  liquidsoap:
+    image: savonet/liquidsoap:v2.2.5
+    container_name: radio_liquidsoap
+    volumes:
+      - ./config/radio.liq:/radio.liq:ro
+      - ./music:/music:ro
+      - ./data:/shared
+    command: liquidsoap /radio.liq
+    depends_on:
+      - icecast
+    restart: unless-stopped
+    
