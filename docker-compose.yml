@@ -1,12 +1,16 @@
 services:
   # Icecast - стриминг сервер
   icecast:
-    image: moul/icecast
+    image: libretime/icecast:2.4.4
     container_name: radio_icecast
     ports:
       - "8000:8000"
-    volumes:
-      - ./config/icecast.xml:/etc/icecast2/icecast.xml:ro
+    environment:
+      - ICECAST_SOURCE_PASSWORD=radio_source_pwd
+      - ICECAST_ADMIN_PASSWORD=radio_admin_pwd
+      - ICECAST_RELAY_PASSWORD=radio_relay_pwd
+      - ICECAST_HOSTNAME=localhost
+      - ICECAST_LOCATION=Earth
     restart: unless-stopped
 
   # Liquidsoap - проигрывает музыку и отправляет в Icecast
@@ -21,4 +25,3 @@ services:
     depends_on:
       - icecast
     restart: unless-stopped
-    
