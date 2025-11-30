@@ -15,3 +15,9 @@
 2. Запустите сервисы:
 ```bash
 docker compose up -d
+```
+3. Откройте в браузере:
+
+    Плеер: static/index.html (пока локально)
+    Прямой стрим: http://localhost:8000/stream
+    Админка Icecast: http://localhost:8000/admin (admin / radio_admin_pwd)
