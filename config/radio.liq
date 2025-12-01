@@ -4,7 +4,7 @@
 # Настройки логирования
 settings.log.file := false
 settings.log.stdout := true
-settings.log.level := 3
+settings.log.level := 2
 
 # Плейлист из папки /music
 radio = playlist(
