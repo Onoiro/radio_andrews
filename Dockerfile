@@ -14,6 +14,9 @@ RUN uv sync --frozen --no-dev
 # Copy source code
 COPY src/ ./src/
 
+# Add src to Python path
+ENV PYTHONPATH=/app/src
+
 # Create shared directory
 RUN mkdir -p /shared
 

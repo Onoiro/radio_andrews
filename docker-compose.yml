@@ -20,7 +20,7 @@ services:
     volumes:
       - ./config/radio.liq:/radio.liq:ro
       - ./music:/music:ro
-      - shared_data:/shared
+      - ./shared:/shared
     command: liquidsoap /radio.liq
     depends_on:
       - icecast
@@ -33,13 +33,10 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - shared_data:/shared:ro
+      - ./shared:/shared:ro
     environment:
       - FLASK_ENV=production
       - CURRENT_TRACK_FILE=/shared/current_track.json
     depends_on:
       - liquidsoap
     restart: unless-stopped
-
-volumes:
-  shared_data:

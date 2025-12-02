@@ -1,5 +1,5 @@
 # Radio Andrews - Liquidsoap configuration
-# Plays music and writes current track info to JSON file
+# Simple version - just play music
 
 # Logging settings
 settings.log.file := false
@@ -15,27 +15,6 @@ radio = playlist(
 
 # Fallback to silence if playlist is empty
 radio = fallback(track_sensitive=false, [radio, blank()])
-
-# Write track info to JSON file when track changes
-def write_track_info(m)
-    title = m["title"]
-    artist = m["artist"]
-    filename = m["filename"]
-    
-    # Use filename as title if title is empty
-    display_title = if title == "" then filename else title end
-    display_artist = if artist == "" then "Unknown" else artist end
-    
-    timestamp = int_of_float(time())
-    
-    data = '{"title": "#{display_title}", "artist": "#{display_artist}", "filename": "#{filename}", "started_at": #{timestamp}}'
-    
-    log("Now playing: #{display_artist} - #{display_title}")
-    
-    file.write(data=data, "/shared/current_track.json")
-end
-
-radio = radio.on_track(write_track_info)
 
 # Output to Icecast
 output.icecast(
