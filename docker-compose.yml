@@ -1,5 +1,5 @@
 services:
-  # Icecast - стриминг сервер
+  # Icecast - streaming server
   icecast:
     image: libretime/icecast:2.4.4
     container_name: radio_icecast
@@ -13,15 +13,33 @@ services:
       - ICECAST_LOCATION=Earth
     restart: unless-stopped
 
-  # Liquidsoap - проигрывает музыку и отправляет в Icecast
+  # Liquidsoap - plays music and sends to Icecast
   liquidsoap:
     image: savonet/liquidsoap:v2.2.5
     container_name: radio_liquidsoap
     volumes:
       - ./config/radio.liq:/radio.liq:ro
       - ./music:/music:ro
-      - ./data:/shared
+      - shared_data:/shared
     command: liquidsoap /radio.liq
     depends_on:
       - icecast
     restart: unless-stopped
+
+  # Flask API
+  api:
+    build: .
+    container_name: radio_api
+    ports:
+      - "5000:5000"
+    volumes:
+      - shared_data:/shared:ro
+    environment:
+      - FLASK_ENV=production
+      - CURRENT_TRACK_FILE=/shared/current_track.json
+    depends_on:
+      - liquidsoap
+    restart: unless-stopped
+
+volumes:
+  shared_data:
