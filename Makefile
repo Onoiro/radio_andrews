@@ -116,6 +116,20 @@ serve: ## Start local server for static files (port 8080)
 	cd static && python3 -m http.server 8080
 
 # ============================================
+# API DEVELOPMENT
+# ============================================
+
+api-dev: ## Run Flask API locally (development mode)
+	FLASK_ENV=development CURRENT_TRACK_FILE=data/current_track.json \
+		$(UV) run flask --app radio_andrews.app:create_app run --debug --port 5000
+
+api-logs: ## Show API logs
+	docker compose logs -f --tail=100 api
+
+shell-api: ## Open shell in API container
+	docker compose exec api sh
+
+# ============================================
 # CLEANUP
 # ============================================
 
