@@ -130,6 +130,19 @@ shell-api: ## Open shell in API container
 	docker compose exec api sh
 
 # ============================================
+# DATABASE
+# ============================================
+
+db-init: ## Initialize database
+	docker compose exec api uv run flask --app radio_andrews.app:create_app init-db
+
+db-scan: ## Scan music folder and add tracks to database
+	docker compose exec api uv run flask --app radio_andrews.app:create_app scan-music
+
+db-tracks: ## List all tracks in database
+	docker compose exec api uv run flask --app radio_andrews.app:create_app list-tracks
+
+# ============================================
 # CLEANUP
 # ============================================
 
