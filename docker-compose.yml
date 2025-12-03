@@ -34,9 +34,13 @@ services:
       - "5000:5000"
     volumes:
       - ./shared:/shared:ro
+      - ./music:/music:ro
+      - ./data:/app/data
     environment:
       - FLASK_ENV=production
       - CURRENT_TRACK_FILE=/shared/current_track.json
+      - DATABASE_URL=sqlite:////app/data/radio.db
+      - MUSIC_FOLDER=/music
     depends_on:
       - liquidsoap
     restart: unless-stopped

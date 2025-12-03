@@ -18,7 +18,7 @@ COPY src/ ./src/
 ENV PYTHONPATH=/app/src
 
 # Create shared directory
-RUN mkdir -p /shared
+RUN mkdir -p /app/data /shared
 
 # Expose port
 EXPOSE 5000
