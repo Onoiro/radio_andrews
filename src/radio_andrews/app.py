@@ -4,7 +4,9 @@ from flask import Flask
 from flask_cors import CORS
 
 from radio_andrews.api.routes import api
+from radio_andrews.cli import register_cli
 from radio_andrews.config import get_config
+from radio_andrews.models import db
 
 
 def create_app(config=None) -> Flask:
@@ -24,11 +26,19 @@ def create_app(config=None) -> Flask:
 
     app.config.from_object(config)
 
-    # Enable CORS for all routes
+    # Initialize extensions
+    db.init_app(app)
     CORS(app)
 
     # Register blueprints
     app.register_blueprint(api)
+
+    # Register CLI commands
+    register_cli(app)
+
+    # Create tables
+    with app.app_context():
+        db.create_all()
 
     # Root endpoint
     @app.route("/")
