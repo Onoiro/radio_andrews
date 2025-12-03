@@ -12,7 +12,15 @@ class Config:
         os.getenv("CURRENT_TRACK_FILE", "/shared/current_track.json")
     )
 
-    # For local development
+    # Database
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "DATABASE_URL", "sqlite:///data/radio.db"
+    )
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # Music folder
+    MUSIC_FOLDER = Path(os.getenv("MUSIC_FOLDER", "/music"))
+
     DEBUG = os.getenv("FLASK_DEBUG", "0") == "1"
 
 
@@ -21,14 +29,21 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     CURRENT_TRACK_FILE = Path(
-        os.getenv("CURRENT_TRACK_FILE", "data/current_track.json")
+        os.getenv("CURRENT_TRACK_FILE", "shared/current_track.json")
     )
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "DATABASE_URL", "sqlite:///data/radio.db"
+    )
+    MUSIC_FOLDER = Path(os.getenv("MUSIC_FOLDER", "music"))
 
 
-class ProductionConfig(Config):
-    """Production configuration."""
+class TestingConfig(Config):
+    """Testing configuration."""
 
-    DEBUG = False
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    CURRENT_TRACK_FILE = Path("/tmp/test_current_track.json")
+    MUSIC_FOLDER = Path("/tmp/test_music")
 
 
 def get_config() -> Config:
@@ -36,4 +51,12 @@ def get_config() -> Config:
     env = os.getenv("FLASK_ENV", "production")
     if env == "development":
         return DevelopmentConfig()
+    if env == "testing":
+        return TestingConfig()
     return ProductionConfig()
+
+
+class ProductionConfig(Config):
+    """Production configuration."""
+
+    DEBUG = False
