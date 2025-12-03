@@ -1,6 +1,7 @@
 """Flask application factory."""
 
 from flask import Flask
+from flask_cors import CORS
 
 from radio_andrews.api.routes import api
 from radio_andrews.config import get_config
@@ -22,6 +23,9 @@ def create_app(config=None) -> Flask:
         config = get_config()
 
     app.config.from_object(config)
+
+    # Enable CORS for all routes
+    CORS(app)
 
     # Register blueprints
     app.register_blueprint(api)
