@@ -1,0 +1,48 @@
+services:
+  # Icecast - streaming server
+  icecast:
+    image: libretime/icecast:2.4.4
+    container_name: radio_icecast
+    ports:
+      - "127.0.0.1:8002:8000"
+    environment:
+      - ICECAST_SOURCE_PASSWORD=${ICECAST_SOURCE_PASSWORD}
+      - ICECAST_ADMIN_PASSWORD=${ICECAST_ADMIN_PASSWORD}
+      - ICECAST_RELAY_PASSWORD=${ICECAST_RELAY_PASSWORD}
+      - ICECAST_HOSTNAME=${DOMAIN}
+      - ICECAST_LOCATION=Earth
+    restart: unless-stopped
+
+  # Liquidsoap - plays music and sends to Icecast
+  liquidsoap:
+    image: savonet/liquidsoap:v2.2.5
+    container_name: radio_liquidsoap
+    volumes:
+      - ./config/radio.prod.liq:/radio.liq:ro
+      - ./music:/music:ro
+      - ./shared:/shared
+    environment:
+      - ICECAST_SOURCE_PASSWORD=${ICECAST_SOURCE_PASSWORD}
+    command: liquidsoap /radio.liq
+    depends_on:
+      - icecast
+    restart: unless-stopped
+
+  # Flask API
+  api:
+    build: .
+    container_name: radio_api
+    ports:
+      - "127.0.0.1:5001:5000"
+    volumes:
+      - ./shared:/shared:ro
+      - ./music:/music:ro
+      - ./data:/app/data
+    environment:
+      - FLASK_ENV=production
+      - CURRENT_TRACK_FILE=/shared/current_track.json
+      - DATABASE_URL=sqlite:////app/data/radio.db
+      - MUSIC_FOLDER=/music
+    depends_on:
+      - liquidsoap
+    restart: unless-stopped
