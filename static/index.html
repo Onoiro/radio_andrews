@@ -95,7 +95,7 @@
         <div class="elapsed-time" id="elapsed-time"></div>
         
         <audio id="player" controls>
-            <source src="http://localhost:8000/stream" type="audio/mpeg">
+            <source src="/stream" type="audio/mpeg">
             Your browser does not support audio.
         </audio>
         
@@ -105,8 +105,9 @@
     <div class="api-status" id="api-status"></div>
 
     <script>
-        const API_URL = 'http://localhost:5000/api';
-        const UPDATE_INTERVAL = 5000; // 5 seconds
+        // Use relative URLs - nginx will proxy
+        const API_URL = '/api';
+        const UPDATE_INTERVAL = 5000;
         
         const player = document.getElementById('player');
         const titleEl = document.getElementById('track-title');
@@ -115,7 +116,6 @@
         const statusEl = document.getElementById('status');
         const apiStatusEl = document.getElementById('api-status');
         
-        // Format seconds to MM:SS
         function formatTime(seconds) {
             if (seconds < 0) seconds = 0;
             const mins = Math.floor(seconds / 60);
@@ -123,7 +123,6 @@
             return `${mins}:${secs.toString().padStart(2, '0')}`;
         }
         
-        // Fetch current track info
         async function updateTrackInfo() {
             try {
                 const response = await fetch(`${API_URL}/current`);
@@ -134,8 +133,7 @@
                 titleEl.textContent = data.title || 'Unknown';
                 artistEl.textContent = data.artist || 'Unknown';
                 elapsedEl.textContent = `Playing for ${formatTime(data.elapsed)}`;
-                apiStatusEl.textContent = 'API connected';
-                apiStatusEl.style.color = '#4ecca3';
+                apiStatusEl.textContent = '';
                 
             } catch (error) {
                 apiStatusEl.textContent = 'API not available';
@@ -143,7 +141,6 @@
             }
         }
         
-        // Player event listeners
         player.addEventListener('playing', () => {
             statusEl.textContent = '▶️ Playing';
             statusEl.className = 'status';
@@ -164,7 +161,6 @@
             statusEl.className = 'status';
         });
         
-        // Start updating track info
         updateTrackInfo();
         setInterval(updateTrackInfo, UPDATE_INTERVAL);
     </script>
