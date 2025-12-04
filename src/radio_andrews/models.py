@@ -1,10 +1,15 @@
 """Database models."""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
+
+def utcnow():
+    """Return current UTC time (timezone-aware)."""
+    return datetime.now(timezone.utc)
 
 
 class Track(db.Model):
@@ -17,7 +22,7 @@ class Track(db.Model):
     title = db.Column(db.String(255), nullable=False)
     artist = db.Column(db.String(255), default="Unknown")
     duration = db.Column(db.Integer, default=0)  # seconds
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Relationship to play history
     plays = db.relationship("PlayHistory", backref="track", lazy=True)
@@ -41,4 +46,4 @@ class PlayHistory(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     track_id = db.Column(db.Integer, db.ForeignKey("tracks.id"), nullable=False)
-    played_at = db.Column(db.DateTime, default=datetime.utcnow)
+    played_at = db.Column(db.DateTime, default=utcnow)

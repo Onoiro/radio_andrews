@@ -92,7 +92,7 @@ def get_track(track_id: int):
     Returns:
         JSON with track info or 404.
     """
-    track = Track.query.get_or_404(track_id)
+    track = db.get_or_404(Track, track_id)
     return jsonify(track.to_dict())
 
 
