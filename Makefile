@@ -153,7 +153,7 @@ test: ## Run tests
 	$(UV) run pytest -v
 
 test-cov: ## Run tests with coverage
-	$(UV) run pytest --cov=src --cov-report=html
+	$(UV) run pytest --cov=src --cov-report=term-missing:skip-covered --cov-report=html
 
 # ============================================
 # LOCAL SERVER
