@@ -1,6 +1,6 @@
 [project]
 name = "radio-andrews"
-version = "0.1.0"
+version = "1.0.0"
 description = "Internet radio station"
 readme = "README.md"
 requires-python = ">=3.12"

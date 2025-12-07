@@ -45,7 +45,7 @@ Simple internet radio station built with Python, Flask, Icecast, and Liquidsoap.
 
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/radio_andrews.git
+git clone https://github.com/Onoiro/radio_andrews.git
 cd radio_andrews
 
 # Install dependencies
@@ -99,7 +99,7 @@ Production Deployment
 Bash
 
 # Clone on server
-git clone https://github.com/YOUR_USERNAME/radio_andrews.git
+git clone https://github.com/Onoiro/radio_andrews.git
 cd radio_andrews
 
 # Create environment file
