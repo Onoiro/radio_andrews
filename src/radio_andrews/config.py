@@ -13,9 +13,7 @@ class Config:
     )
 
     # Database
-    SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL", "sqlite:///data/radio.db"
-    )
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///data/radio.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Music folder
@@ -31,9 +29,7 @@ class DevelopmentConfig(Config):
     CURRENT_TRACK_FILE = Path(
         os.getenv("CURRENT_TRACK_FILE", "shared/current_track.json")
     )
-    SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL", "sqlite:///data/radio.db"
-    )
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///data/radio.db")
     MUSIC_FOLDER = Path(os.getenv("MUSIC_FOLDER", "music"))
 
 

@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-from mutagen.mp3 import MP3
 from mutagen.easyid3 import EasyID3
+from mutagen.mp3 import MP3
 
 from radio_andrews.models import Track, db
 

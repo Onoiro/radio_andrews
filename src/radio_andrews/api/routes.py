@@ -6,7 +6,7 @@ from pathlib import Path
 
 from flask import Blueprint, current_app, jsonify
 
-from radio_andrews.models import Track, PlayHistory, db
+from radio_andrews.models import Track, db
 
 api = Blueprint("api", __name__, url_prefix="/api")
 

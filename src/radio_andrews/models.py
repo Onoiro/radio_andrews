@@ -1,6 +1,6 @@
 """Database models."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -9,7 +9,7 @@ db = SQLAlchemy()
 
 def utcnow():
     """Return current UTC time (timezone-aware)."""
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 class Track(db.Model):
