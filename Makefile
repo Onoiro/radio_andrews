@@ -84,6 +84,16 @@ deploy-status: ## Show production status
 	docker compose -f docker-compose.prod.yml ps
 
 # ============================================
+# CI/CD
+# ============================================
+
+ci: lint test ## Run all CI checks locally
+	@echo "$(GREEN)All CI checks passed!$(RESET)"
+
+ci-build: ## Build Docker image locally (like CI)
+	docker build -t radio-andrews-api:test .
+
+# ============================================
 # DATABASE - LOCAL
 # ============================================
 

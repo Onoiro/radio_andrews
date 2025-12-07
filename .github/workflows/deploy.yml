@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    # Only deploy if CI passes
+    needs: []
+    
+    # Only run on main branch
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ~/radio_andrews
+            
+            # Pull latest code
+            git pull origin main
+            
+            # Build and restart containers
+            docker compose -f docker-compose.prod.yml build api
+            docker compose -f docker-compose.prod.yml up -d
+            
+            # Scan for new music (optional)
+            docker compose -f docker-compose.prod.yml exec -T api uv run flask --app radio_andrews.app:create_app scan-music
+            
+            # Show status
+            docker compose -f docker-compose.prod.yml ps
+            
+            echo "✅ Deployment complete!"

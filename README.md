@@ -2,7 +2,9 @@
 
 Simple internet radio station built with Python, Flask, Icecast, and Liquidsoap.
 
-![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
+[![CI](https://github.com/Onoiro/radio_andrews/actions/workflows/ci.yml/badge.svg)](https://github.com/Onoiro/radio_andrews/actions/workflows/ci.yml)
+[![Deploy](https://github.com/Onoiro/radio_andrews/actions/workflows/deploy.yml/badge.svg)](https://github.com/Onoiro/radio_andrews/actions/workflows/deploy.yml)
+![Python](https://img.shields.io/badge/python-3.12+-blue.svg)
 ![Flask](https://img.shields.io/badge/flask-3.0+-green.svg)
 ![Docker](https://img.shields.io/badge/docker-compose-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
@@ -35,7 +37,7 @@ Simple internet radio station built with Python, Flask, Icecast, and Liquidsoap.
 
 ### Prerequisites
 
-- Python 3.11+
+- Python 3.12+
 - Docker & Docker Compose
 - [uv](https://github.com/astral-sh/uv) (Python package manager)
 
