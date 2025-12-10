@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О проекте - Radio Andrews</title>
+    
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>" type="image/svg+xml">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            color: #eee;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #e94560;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 16px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #4ecca3;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #e94560;
+        }
+
+        /* Sections */
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section h2 {
+            color: #e94560;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #4ecca3;
+            font-size: 18px;
+            margin: 24px 0 12px;
+        }
+
+        .section p {
+            color: #ccc;
+            margin-bottom: 16px;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* Hero concept section */
+        .concept-highlight {
+            background: rgba(233, 69, 96, 0.1);
+            border-left: 4px solid #e94560;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .concept-highlight p {
+            margin-bottom: 12px;
+        }
+
+        .concept-highlight p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Features list */
+        .features-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            color: #ccc;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            color: #4ecca3;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Tech table */
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .tech-table th,
+        .tech-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tech-table th {
+            color: #e94560;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tech-table td:first-child {
+            color: #4ecca3;
+            font-weight: 500;
+        }
+
+        .tech-table td:last-child {
+            color: #ccc;
+        }
+
+        .tech-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Tracks list */
+        .tracks-list {
+            list-style: none;
+        }
+
+        .track-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .track-item:last-child {
+            border-bottom: none;
+        }
+
+        .track-info {
+            flex: 1;
+        }
+
+        .track-title {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .track-artist {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .track-duration {
+            color: #666;
+            font-size: 14px;
+            font-family: monospace;
+        }
+
+        .tracks-loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+
+        .tracks-count {
+            color: #666;
+            font-size: 14px;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        /* Projects grid */
+        .projects-grid {
+            display: grid;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s, background 0.2s, border-color 0.2s;
+        }
+
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            border-color: rgba(233, 69, 96, 0.5);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .project-icon {
+            font-size: 32px;
+        }
+
+        .project-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .project-desc {
+            color: #aaa;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #4ecca3;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .project-link:hover {
+            color: #e94560;
+        }
+
+        /* Links */
+        .links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            transition: background 0.2s, transform 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .link-item:hover {
+            background: rgba(233, 69, 96, 0.2);
+            transform: translateX(4px);
+            border-color: rgba(233, 69, 96, 0.5);
+        }
+
+        .link-icon {
+            font-size: 24px;
+        }
+
+        .link-info {
+            flex: 1;
+        }
+
+        .link-title {
+            font-weight: 500;
+        }
+
+        .link-desc {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .link-arrow {
+            color: #666;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #444;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #e94560;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section h2 {
+                font-size: 20px;
+            }
+
+            .tech-table {
+                font-size: 14px;
+            }
+
+            .tech-table th,
+            .tech-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Вернуться к радио</a>
+
+        <header class="header">
+            <h1>🎵 Radio Andrews</h1>
+            <p>Личная интернет-радиостанция</p>
+        </header>
+
+        <!-- About Project -->
+        <section class="section">
+            <h2>📻 О проекте</h2>
+            <p>
+                <strong>Radio Andrews</strong> - это мой личный технический и творческий проект, интернет-радиостанция, 
+                которая круглосуточно и в случайном порядке транслирует мои треки. Весь контент - это авторский рэп, 
+                написанный мной (Andrews) при музыкальном сопровождении, созданном с помощью нейросети Suno.
+            </p>
+
+            <div class="concept-highlight">
+                <p>
+                    <strong>Музыкальная концепция</strong> - это стилизованная гангстерская сага о московском 
+                    спальном районе Матвеевка. В треках разворачиваются баталии за территории, влияние и авторитет 
+                    между различными группировками.
+                </p>
+                <p>
+                    Однако за этим художественным фасадом скрывается вполне реальная и будничная жизнь: все персонажи 
+                    песен - реальные курьеры разных национальностей, которые каждый день доставляют заказы с продуктами 
+                    по этому району. Их борьба за «зоны» и «влияние» - это метафора их повседневной работы в сервисе доставки.
+                </p>
+            </div>
+        </section>
+
+        <!-- Playlist -->
+        <section class="section">
+            <h2>🎶 Треки в эфире</h2>
+            <ul class="tracks-list" id="tracks-list">
+                <li class="tracks-loading">Загрузка треков...</li>
+            </ul>
+            <div class="tracks-count" id="tracks-count"></div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="section">
+            <h2>🛠 Как это сделано</h2>
+            <p>
+                Проект построен на современных и проверенных технологиях, обеспечивающих стабильное вещание 24/7 
+                и простоту развертывания.
+            </p>
+
+            <h3>Ключевые возможности</h3>
+            <ul class="features-list">
+                <li><strong>Live streaming</strong> - круглосуточное интернет-радио с поддержкой MP3</li>
+                <li><strong>Real-time metadata</strong> - информация о текущем треке доступна через REST API</li>
+                <li><strong>Responsive design</strong> - адаптивный интерфейс для компьютеров и мобильных устройств</li>
+                <li><strong>Track database</strong> - база данных на SQLite с автоматическим сканированием тегов MP3</li>
+                <li><strong>Docker ready</strong> - простая установка и запуск через Docker Compose</li>
+                <li><strong>Self-hosted</strong> - полный контроль над инфраструктурой и данными</li>
+            </ul>
+
+            <h3>Технологический стек</h3>
+            <table class="tech-table">
+                <thead>
+                    <tr>
+                        <th>Компонент</th>
+                        <th>Технология</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Стриминг-сервер</td>
+                        <td>Icecast 2.4</td>
+                    </tr>
+                    <tr>
+                        <td>Генерация аудиопотока</td>
+                        <td>Liquidsoap 2.2</td>
+                    </tr>
+                    <tr>
+                        <td>Backend API</td>
+                        <td>Python 3.12 / Flask 3.0</td>
+                    </tr>
+                    <tr>
+                        <td>База данных</td>
+                        <td>SQLite + SQLAlchemy</td>
+                    </tr>
+                    <tr>
+                        <td>Фронтенд</td>
+                        <td>Vanilla HTML/CSS/JS</td>
+                    </tr>
+                    <tr>
+                        <td>Менеджер пакетов</td>
+                        <td>uv</td>
+                    </tr>
+                    <tr>
+                        <td>Контейнеризация</td>
+                        <td>Docker Compose</td>
+                    </tr>
+                    <tr>
+                        <td>Веб-сервер / Прокси</td>
+                        <td>NGINX</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Other Projects -->
+        <section class="section">
+            <h2>🚀 Другие мои проекты</h2>
+            <p>Кроме радиостанции, я разрабатываю и другие веб-приложения:</p>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-icon">✅</span>
+                        <span class="project-title">TaskMan</span>
+                    </div>
+                    <p class="project-desc">
+                        Веб-приложение для управления задачами в одиночку или в команде (например, в семье). 
+                        Позволяет регистрироваться, создавать рабочие пространства и эффективно организовывать 
+                        дела с изоляцией по командам.
+                    </p>
+                    <a href="https://taskman.2-way.ru" target="_blank" class="project-link">
+                        Попробовать →
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-icon">🔍</span>
+                        <span class="project-title">WebAnalyzer</span>
+                    </div>
+                    <p class="project-desc">
+                        Минималистичный инструмент для базового SEO-анализа сайтов. Позволяет быстро проверить 
+                        доступность сайта, а также наличие ключевых тегов: &lt;h1&gt;, &lt;title&gt; 
+                        и мета-описания (&lt;meta name="description"&gt;).
+                    </p>
+                    <a href="https://weban.2-way.ru" target="_blank" class="project-link">
+                        Перейти на сайт →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Links -->
+        <section class="section">
+            <h2>🔗 Ссылки</h2>
+            <div class="links-list">
+                <a href="https://github.com/Onoiro/radio_andrews" target="_blank" class="link-item">
+                    <span class="link-icon">📦</span>
+                    <div class="link-info">
+                        <div class="link-title">Исходный код</div>
+                        <div class="link-desc">Посмотреть проект на GitHub</div>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+                <a href="https://github.com/Onoiro" target="_blank" class="link-item">
+                    <span class="link-icon">👨‍💻</span>
+                    <div class="link-info">
+                        <div class="link-title">GitHub профиль</div>
+                        <div class="link-desc">Больше проектов от Andrews</div>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📬 Связь</h2>
+            <p>Открыт к сотрудничеству и новым проектам. Свяжитесь со мной:</p>
+            <div class="links-list">
+                <a href="https://t.me/AndreeBo" target="_blank" class="link-item">
+                    <span class="link-icon">💬</span>
+                    <div class="link-info">
+                        <div class="link-title">Telegram</div>
+                        <div class="link-desc">@AndreeBo</div>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+                <a href="mailto:donoriono@gmail.com" class="link-item">
+                    <span class="link-icon">✉️</span>
+                    <div class="link-info">
+                        <div class="link-title">Email</div>
+                        <div class="link-desc">donoriono@gmail.com</div>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                Сделано с ❤️ by <a href="https://github.com/Onoiro" target="_blank">Andrews</a><br>
+                <a href="/">Слушать Radio Andrews</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const isLocalDev = window.location.port === '8080';
+        const API_URL = isLocalDev ? 'http://localhost:5000/api' : '/api';
+
+        function formatDuration(seconds) {
+            if (!seconds) return '--:--';
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        async function loadTracks() {
+            const listEl = document.getElementById('tracks-list');
+            const countEl = document.getElementById('tracks-count');
+
+            try {
+                const response = await fetch(`${API_URL}/tracks`);
+                if (!response.ok) throw new Error('API error');
+
+                const tracks = await response.json();
+
+                if (tracks.length === 0) {
+                    listEl.innerHTML = '<li class="tracks-loading">Нет доступных треков</li>';
+                    return;
+                }
+
+                listEl.innerHTML = tracks.map(track => `
+                    <li class="track-item">
+                        <div class="track-info">
+                            <div class="track-title">${track.title}</div>
+                            <div class="track-artist">${track.artist}</div>
+                        </div>
+                        <div class="track-duration">${formatDuration(track.duration)}</div>
+                    </li>
+                `).join('');
+
+                countEl.textContent = `Всего: ${tracks.length} треков`;
+
+            } catch (error) {
+                listEl.innerHTML = '<li class="tracks-loading">Не удалось загрузить треки</li>';
+            }
+        }
+
+        loadTracks();
+    </script>
+</body>
+</html>
