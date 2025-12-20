@@ -251,7 +251,6 @@ Andrews — radio.2-way.ru
 ## LICENSE файл
 
 ```bash
-cat > LICENSE << 'EOF'
 MIT License
 
 Copyright (c) 2025 Andrews

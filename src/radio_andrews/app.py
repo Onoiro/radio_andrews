@@ -43,6 +43,6 @@ def create_app(config=None) -> Flask:
     # Root endpoint
     @app.route("/")
     def index():
-        return {"name": "Radio Andrews API", "version": "0.1.0"}
+        return {"name": "Radio Andrews API", "version": "1.0.1"}
 
     return app
